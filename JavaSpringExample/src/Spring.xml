@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- Example 1 <bean id="triangle" class="com.java.spring.example.Triangle"> 
+		<constructor-arg name="format" value="InEqual"></constructor-arg> <property 
+		name="in" ref="rect"></property> </bean> <bean class="com.java.spring.example.InjectingObject" 
+		id="rect"> <property name="height" value="30"></property> <property name="width" 
+		value="10"></property> </bean> End of Example 1 -->
+
+	<!-- Example 2 <bean id="student" class="com.java.spring.example2.StuDetails"> 
+		<property name="name" value="venkatesh"></property> <property name="marks"> 
+		<list> <ref bean="mark1" /> <ref bean="mark2" /> <ref bean="mark3" /> <ref 
+		bean="mark4" /> <ref bean="mark5" /> </list> </property> </bean> <bean id="mark1" 
+		class="com.java.spring.example2.Mark"> <property name="m" value="50"></property> 
+		</bean> <bean id="mark2" class="com.java.spring.example2.Mark"> <property 
+		name="m" value="80"></property> </bean> <bean id="mark3" class="com.java.spring.example2.Mark"> 
+		<property name="m" value="60"></property> </bean> <bean id="mark4" class="com.java.spring.example2.Mark"> 
+		<property name="m" value="20"></property> </bean> <bean id="mark5" class="com.java.spring.example2.Mark"> 
+		<property name="m" value="40"></property> </bean> End of Example 2 -->
+	<!-- Exampe 3 <bean id="userDetails" class="com.java.spring.example3.UserDetails" 
+		autowire="byName"> <property name="name" value="MyName"></property> </bean> 
+		<bean id="homeAddress" class="com.java.spring.example3.Address"> <property 
+		name="doorNo" value="25"></property> <property name="street" value="Dharga 
+		Road"></property> <property name="city" value="chennai"></property> </bean> 
+		<bean id="officeAddress" class="com.java.spring.example3.Address"> <property 
+		name="doorNo" value="100"></property> <property name="street" value="Maruthi 
+		Nagar"></property> <property name="city" value="Bangalore"></property> </bean> 
+		End of Example 3 -->
+	<!-- Example 4 <bean id="userDetails" class="com.java.spring.example3.UserDetails" 
+		autowire="byName"> <property name="name" value="MyName"></property> <property 
+		name="homeAddress" ref="homeAddress"></property> <property name="officeAddress" 
+		ref="officeAddress"></property> </bean> <bean id="homeAddress" class="com.java.spring.example3.Address"> 
+		<property name="doorNo" value="25"></property> <property name="street" value="Dharga 
+		Road"></property> <property name="city" value="chennai"></property> </bean> 
+		<bean id="officeAddress" class="com.java.spring.example3.Address"> <property 
+		name="doorNo" value="100"></property> <property name="street" value="Maruthi 
+		Nagar"></property> <property name="city" value="Bangalore"></property> </bean> 
+		<bean id="beanPostProcess" class="com.java.spring.example4.BeanPostProcess"></bean> 
+		End of Example 4 -->
+	<bean id="userDetails" class="com.java.spring.example3.UserDetails"
+		autowire="byName">
+		<property name="name" value="MyName"></property>
+		<property name="homeAddress" ref="homeAddress"></property>
+		<property name="officeAddress" ref="officeAddress"></property>
+	</bean>
+	<bean id="homeAddress" class="com.java.spring.example3.Address">
+		<property name="doorNo" value="${homeAddress.doorNo}"></property>
+		<property name="street" value="${homeAddress.street}"></property>
+		<property name="city" value="${homeAddress.city}"></property>
+	</bean>
+	<bean id="officeAddress" class="com.java.spring.example3.Address">
+		<property name="doorNo" value="100"></property>
+		<property name="street" value="Maruthi Nagar"></property>
+		<property name="city" value="Bangalore"></property>
+	</bean>
+	<bean id="beanFactoryPostprocess" class="com.java.spring.example5.BeanFactoryPostProcess"></bean>
+	<bean id="PropertiesFileHandler"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:addressConfig.properties"></property>
+	</bean>
+</beans>
