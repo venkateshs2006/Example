@@ -2,8 +2,12 @@ package com.java.hibernate.example3.pojo;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 @Embeddable
 public class Address {
+	
 	@Column(name="DoorNo")
 	private String doorNo;
 	@Column(name="Street")
@@ -14,6 +18,7 @@ public class Address {
 	private String state;
 	@Column(name="Country")
 	private String country;
+	
 	public String getDoorNo() {
 		return doorNo;
 	}

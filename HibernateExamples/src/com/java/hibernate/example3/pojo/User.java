@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,7 +39,7 @@ public class User {
 	@Column(name = "DateOfBirth")
 	@Temporal(TemporalType.DATE)
 	private Date dob;
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@JoinTable(name="Address", joinColumns=@JoinColumn(name="UserID"))
 	@GenericGenerator(name="MyCollectionGenerator", strategy="hilo")
 	@CollectionId(columns=@Column(name="AddressID"), generator="MyCollectionGenerator",type=@Type(type="long"))

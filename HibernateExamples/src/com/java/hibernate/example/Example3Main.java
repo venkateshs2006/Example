@@ -40,5 +40,6 @@ public class Example3Main {
 		session.getTransaction().commit();
 		User getUser = (User) session.get(User.class, 1);
 		System.out.println(getUser.toString());
+		System.out.println("Address Size :"+getUser.getAddress().size());
 	}
 }
