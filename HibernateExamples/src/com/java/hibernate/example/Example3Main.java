@@ -1,9 +1,8 @@
 package com.java.hibernate.example;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -28,7 +27,7 @@ public class Example3Main {
 		user.setDob(new Date());
 		//user.setHomeAddress(address);
 		//user.setOfficeAddress(address);
-		Set<Address> setOfAddress=new HashSet<Address>();
+		List<Address> setOfAddress=new ArrayList<Address>();
 		setOfAddress.add(address);
 		address.setDoorNo("21");
 		setOfAddress.add(address);

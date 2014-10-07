@@ -13,9 +13,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.CollectionId;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 @Entity(name = "UserDetails")
 public class User {
@@ -33,7 +39,10 @@ public class User {
 	@Temporal(TemporalType.DATE)
 	private Date dob;
 	@ElementCollection
-	private Set<Address> address;
+	@JoinTable(name="Address", joinColumns=@JoinColumn(name="UserID"))
+	@GenericGenerator(name="MyCollectionGenerator", strategy="hilo")
+	@CollectionId(columns=@Column(name="AddressID"), generator="MyCollectionGenerator",type=@Type(type="long"))
+	private List<Address> address;
 
 	public int getUserId() {
 		return userId;
@@ -75,11 +84,11 @@ public class User {
 		this.dob = dob;
 	}
 
-	public Set<Address> getAddress() {
+	public List<Address> getAddress() {
 		return address;
 	}
 
-	public void setAddress(Set<Address> address) {
+	public void setAddress(List<Address> address) {
 		this.address = address;
 	}
 
@@ -87,8 +96,9 @@ public class User {
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName
 				+ ", password=" + password + ", email=" + email + ", dob="
-				+ dob + ", address=" + address.toString() + "]";
+				+ dob + ", address=" + address + "]";
 	}
+
 
 	
 
