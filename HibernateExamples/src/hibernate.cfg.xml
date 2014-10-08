@@ -45,8 +45,11 @@
 		<!-- <mapping class="com.java.hibernate.example1.pojo.User" /> -->
 		<!-- <mapping class="com.java.hibernate.example2.pojo.User" />
 		<mapping class="com.java.hibernate.example2.pojo.Address" /> -->
-		<mapping class="com.java.hibernate.example3.pojo.User" />
-		<mapping class="com.java.hibernate.example3.pojo.Address" /> 
+		<!-- <mapping class="com.java.hibernate.example3.pojo.User" />
+		<mapping class="com.java.hibernate.example3.pojo.Address" />  -->
+		
+		<mapping class="com.java.hibernate.example4.pojo.User" />
+		<mapping class="com.java.hibernate.example4.pojo.Vehicle" /> 
 	</session-factory>
 
 </hibernate-configuration>
