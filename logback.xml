@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--
+       Explanation:
+       1, the log level and file
+           Log records adopt hierarchical records, and the levels correspond to log file names. Different levels of log information are recorded in different log files.
+           For example, the error level logs to log_error_xxx.log or log_error.log (the file is the log file of the current record), and log_error_xxx.log is the archive log.
+           The log file is recorded by date. If the size of the log file is equal to or greater than 2M within the same day, it is named in the order of 0, 1, 2...
+           For example, log-level-2013-12-21.0.log
+           The same is true for other levels of logs.
+       2, the file path
+           If you are developing, testing, running the project in Eclipse, then go to the Eclipse installation path to find the logs folder, relative path ../logs.
+           If deployed to Tomcat, in the logs file in Tomcat
+       3, Appender
+           FILEERROR corresponds to the error level, and the file name is named in the form of log-error-xxx.log
+           FILEWARN corresponds to the warn level, and the file name is named in the form of log-warn-xxx.log
+           FILEINFO corresponds to the info level and the file name is named in the form of log-info-xxx.log
+           FILEDEBUG corresponds to the debug level and the file name is named in the form of log-debug-xxx.log
+           Stdout outputs log information to the control for use in development tests
+    -->
+    <contextName>SpringBootDemo</contextName>
+    <property name="LOG_PATH" value="/home/logs" />
+    <!--Set the system log directory -->
+    <property name="APP_DIR" value="springbootexample" />
+
+    <!-- Colorless log output at the console output -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- Formatted output: %d represents the date, %thread represents the thread name, %-5level: Level displays 5 character widths from the left %msg: log message, %n is a newline character -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+<!-- logger, date scroll record -->
+    <appender name="FILEERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- The path and file name of the log file being logged -->
+        <file>${LOG_PATH}/${APP_DIR}/log_error.log</file>
+        <!-- The logger's scroll strategy, by date, by size -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- The path of the archived log file. For example, today is a 2013-12-21 log. The path of the currently written log file is specified by the file node. You can set this file and the path of the file specified file to different paths so that the current log is set. File or archive log files are placed in different directories.
+            The 2013-12-21 log file is specified by the fileNamePattern. %d{yyyy-MM-dd} specifies the date format, %i specifies the index -->
+            <fileNamePattern>${LOG_PATH}/${APP_DIR}/error/log-error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- In addition to logging, the log file is also configured to not exceed 2M. If it exceeds 2M, the log file will start with index 0.
+            Name the log file, for example log-error-2013-12-21.0.log -->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>2MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <!-- Append mode log -->
+        <append>true</append>
+        <!-- The format of the log file -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>===%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger Line:%-3L - %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <!-- This log file only records info level -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- logger, date scroll record -->
+    <appender name="FILEWARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- The path and file name of the log file being logged -->
+        <file>${LOG_PATH}/${APP_DIR}/log_warn.log</file>
+        <!-- The logger's scroll strategy, by date, by size -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- The path of the archived log file. For example, today is a 2013-12-21 log. The path of the currently written log file is specified by the file node. You can set this file and the path of the file specified file to different paths so that the current log is set. File or archive log files are placed in different directories.
+            The 2013-12-21 log file is specified by the fileNamePattern. %d{yyyy-MM-dd} specifies the date format, %i specifies the index -->
+            <fileNamePattern>${LOG_PATH}/${APP_DIR}/warn/log-warn-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- In addition to logging, the log file is also configured to not exceed 2M. If it exceeds 2M, the log file will start with index 0.
+            Name the log file, for example log-error-2013-12-21.0.log -->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>2MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <!-- Append mode log -->
+        <append>true</append>
+        <!-- The format of the log file -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>===%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger Line:%-3L - %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <!-- This log file only records info level -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>warn</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- logger, date scroll record -->
+    <appender name="FILEINFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- The path and file name of the log file being logged -->
+        <file>${LOG_PATH}/${APP_DIR}/log_info.log</file>
+        <!-- The logger's scroll strategy, by date, by size -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- The path of the archived log file. For example, today is a 2013-12-21 log. The path of the currently written log file is specified by the file node. You can set this file and the path of the file specified file to different paths so that the current log is set. File or archive log files are placed in different directories.
+            The 2013-12-21 log file is specified by the fileNamePattern. %d{yyyy-MM-dd} specifies the date format, %i specifies the index -->
+            <fileNamePattern>${LOG_PATH}/${APP_DIR}/info/log-info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<!-- In addition to logging, the log file is also configured to not exceed 2M. If it exceeds 2M, the log file will start with index 0.
+            Name the log file, for example log-error-2013-12-21.0.log -->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>2MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <!-- Append mode log -->
+        <append>true</append>
+        <!-- The format of the log file -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>===%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger Line:%-3L - %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <!-- This log file only records info level -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>info</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- logger, date scroll record -->
+    <appender name="FILEDEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- The path and file name of the log file being logged -->
+        <file>${LOG_PATH}/${APP_DIR}/log_debug.log</file>
+        <!-- The logger's scroll strategy, by date, by size -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- The path of the archived log file. For example, today is a 2013-12-21 log. The path of the currently written log file is specified by the file node. You can set this file and the path of the file specified file to different paths so that the current log is set. File or archive log files are placed in different directories.
+            The 2013-12-21 log file is specified by the fileNamePattern. %d{yyyy-MM-dd} specifies the date format, %i specifies the index -->
+            <fileNamePattern>${LOG_PATH}/${APP_DIR}/debug/log-debug-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- In addition to logging, the log file is also configured to not exceed 2M. If it exceeds 2M, the log file will start with index 0.
+            Name the log file, for example log-error-2013-12-21.0.log -->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>2MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <!-- Append mode log -->
+        <append>true</append>
+        <!-- The format of the log file -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>===%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger Line:%-3L - %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <!-- This log file only records info level -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+   <!-- <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        &lt;!&ndash;encoder is configured by default for PatternLayoutEncoder&ndash;&gt;
+        <encoder>
+            <pattern>===%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger Line:%-3L - %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        &lt;!&ndash;This log appender is for development use, only the bottom level is configured, the console output log level is greater than or equal to this level of log information &ndash;&gt;
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>debug</level>
+        </filter>
+    </appender>-->
+
+    <!-- show parameters for hibernate sql tailored specifically for Hibernate -->
+    <!-- <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" />
+    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG" />
+    <logger name="org.hibernate.SQL" level="DEBUG" />
+    <logger name="org.hibernate.engine.QueryParameters" level="DEBUG" />
+    <logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG" /> -->
+
+    <!--myibatis log configure-->
+    <!-- project default level -->
+    <logger name="org.jon.lv" level="debug" />
+
+    <!--log4jdbc -->
+    <logger name="jdbc.sqltiming" level="debug"/>
+    <logger name="com.ibatis" level="debug" />
+    <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="debug" />
+    <logger name="com.ibatis.common.jdbc.ScriptRunner" level="debug" />
+    <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="debug" />
+    <logger name="java.sql.Connection" level="debug" />
+    <logger name="java.sql.Statement" level="debug" />
+    <logger name="java.sql.PreparedStatement" level="debug" />
+    <logger name="java.sql.ResultSet" level="debug" />
+
+    <logger name="org.springframework" level="WARN" />
+
+    <!-- In a production environment, configure this level to a suitable level to avoid too many log files or affect program performance -->
+    <root level="INFO">
+        <appender-ref ref="FILEERROR" />
+        <appender-ref ref="FILEWARN" />
+        <appender-ref ref="FILEINFO" />
+        <appender-ref ref="FILEDEBUG" />
+        <!-- The production environment will remove stdout, testfile -->
+        <appender-ref ref="CONSOLE" />
+    </root>
+	<!-- Environment Configuration -->
+ <!-- <springProfile name="test,dev">
+        <logger name="org.springframework.web" level="INFO"/>
+        <logger name="org.springboot.sample" level="INFO" />
+        <logger name="com.kfit" level="info" />
+    </springProfile>-->
+    <!-- Production Environment. -->
+  <!-- <springProfile name="prod">
+        <logger name="org.springframework.web" level="ERROR"/>
+        <logger name="org.springboot.sample" level="ERROR" />
+        <logger name="com.kfit" level="ERROR" />
+    </springProfile>-->
+
+    <! - log asynchronous to the database ->
+    <!-- <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+        Logs asynchronous to the database
+        <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+           connection pool
+           <dataSource class="com.mchange.v2.c3p0.ComboPooledDataSource">
+              <driverClass>com.mysql.jdbc.Driver</driverClass>
+              <url>jdbc:mysql://127.0.0.1:3306/databaseName</url>
+              <user>root</user>
+              <password>root</password>
+            </dataSource>
+        </connectionSource>
+  </appender> -->
+
+    <!-- Test Environment + Development Environment. Multiple use commas. -->
+
+</configuration>
